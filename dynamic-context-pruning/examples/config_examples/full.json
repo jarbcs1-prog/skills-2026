@@ -1,0 +1,35 @@
+{
+  "thresholds": {
+    "hard_limit": 200000,
+    "pre_rot_threshold": 100000,
+    "compaction_trigger": 150000,
+    "summarization_trigger": 175000
+  },
+  "compaction": {
+    "strategy": "hybrid",
+    "keep_recent_full": 5,
+    "compact_ratio": 0.5,
+    "importance_weights": {
+      "user_goals": 1.0,
+      "errors": 0.9,
+      "key_decisions": 0.8,
+      "tool_outputs": 0.5,
+      "intermediate_steps": 0.3
+    }
+  },
+  "summarization": {
+    "schema": "agent_default",
+    "keep_recent_full": 3,
+    "model": "opencode/big-pickle"
+  },
+  "offloading": {
+    "base_path": ".agent_context",
+    "compression": "gzip",
+    "index_format": "jsonl"
+  },
+  "kv_cache": {
+    "enforce_stable_prefix": true,
+    "append_only": true,
+    "deterministic_json": true
+  }
+}

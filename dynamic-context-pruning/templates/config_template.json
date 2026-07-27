@@ -1,0 +1,26 @@
+{
+  "context_window_limit": 128000,
+  "compaction": {
+    "trigger_threshold": 0.8,
+    "target_ratio": 0.5,
+    "strategy": "summarize_then_offload",
+    "summarization": {
+      "model": "gpt-4o-mini",
+      "max_summary_tokens": 2000,
+      "preserve_recent_messages": 3
+    }
+  },
+  "offloading": {
+    "enabled": true,
+    "directory": ".context_offload",
+    "compression": "gzip"
+  },
+  "kv_cache": {
+    "enabled": true,
+    "prefix_hash": true
+  },
+  "monitoring": {
+    "log_transitions": true,
+    "metrics_file": "context_metrics.jsonl"
+  }
+}

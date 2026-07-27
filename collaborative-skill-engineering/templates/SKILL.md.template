@@ -1,0 +1,30 @@
+---
+name: {skill-name}
+description: |
+  {description of when to use this skill}
+---
+
+# {Skill Title}
+
+{Brief introduction}
+
+## When to Trigger
+
+1. {Trigger condition 1}
+2. {Trigger condition 2}
+
+## Workflow
+
+### Step 1: {Step Name}
+
+{Step description}
+
+## References
+
+- `references/{doc_name}.md` — {description}
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/{name}.py` | {description} |

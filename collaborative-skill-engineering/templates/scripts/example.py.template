@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+"""
+{Script description}
+"""
+import argparse
+import sys
+
+
+def main():
+    parser = argparse.ArgumentParser(description="{Description}")
+    # Add arguments here
+    args = parser.parse_args()
+    # Implementation here
+
+
+if __name__ == "__main__":
+    main()

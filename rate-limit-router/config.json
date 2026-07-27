@@ -1,0 +1,32 @@
+{
+  "zen": {
+    "base_url": "https://opencode.ai/zen/v1/chat/completions"
+  },
+  "openrouter": {
+    "base_url": "https://openrouter.ai/api/v1/chat/completions"
+  },
+  "fallback_map": {
+    "big-pickle": "nvidia/nemotron-3-super-120b-a12b:free",
+    "deepseek-v4-flash-free": "qwen/qwen3-next-80b-a3b-instruct:free",
+    "mimo-v2.5-free": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+    "ling-3.0-flash-free": "tencent/hy3:free",
+    "nemotron-3-ultra-free": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "north-mini-code-free": "cohere/north-mini-code:free",
+    "laguna-s-2.1-free": "poolside/laguna-s-2.1:free"
+  },
+  "reverse_map": {
+    "nvidia/nemotron-3-super-120b-a12b:free": "big-pickle",
+    "qwen/qwen3-next-80b-a3b-instruct:free": "deepseek-v4-flash-free",
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free": "mimo-v2.5-free",
+    "tencent/hy3:free": "ling-3.0-flash-free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free": "nemotron-3-ultra-free",
+    "cohere/north-mini-code:free": "north-mini-code-free",
+    "poolside/laguna-s-2.1:free": "laguna-s-2.1-free"
+  },
+  "backoff": {
+    "initial_delay": 1,
+    "max_delay": 16,
+    "multiplier": 2,
+    "max_retries": 3
+  }
+}

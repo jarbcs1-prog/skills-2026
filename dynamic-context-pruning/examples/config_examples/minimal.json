@@ -1,0 +1,6 @@
+{
+  "thresholds": {
+    "hard_limit": 200000,
+    "compaction_trigger": 150000
+  }
+}
