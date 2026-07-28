@@ -330,26 +330,26 @@ def main():
     if args.command == "preflight":
         run_preflight(args)
 
-            elif args.command == "evaluate":
-                events = load_json(REFLECTION_LOG)
-                if not events:
-                    print("No reflection events found.")
-                else:
-                    total_corrections = sum(event.get("correction_count", 0) for event in events)
-                    total_clarifications = sum(event.get("clarification_count", 0) for event in events)
-                    total_reprompts = sum(event.get("re_prompt_count", 0) for event in events)
-                    avg_distance = (total_corrections + (total_clarifications * 0.5) + (total_reprompts * 0.3)) / len(events)
-                    print(f"Average communication distance: {avg_distance:.2f}")
-                    print(f"Total corrections: {total_corrections}")
-                    print(f"Total clarifications: {total_clarifications}")
-                    print(f"Total re-prompts: {total_reprompts}")
-            elif args.command == "communicate":
-                if not args.audience or not args.hidden_criteria:
-                    print("Please provide --audience and --hidden-criteria arguments.")
-                else:
-                    audience = args.audience.split(",")
-                    criteria = args.hidden_criteria.split(",")
-                    print(f\"Audience Assumptions: {audience}\\nHidden Criteria: {criteria}\")
+    elif args.command == "evaluate":
+          events = load_json(REFLECTION_LOG)
+          if not events:
+             print("No reflection events found.")
+          else:
+             total_corrections = sum(event.get("correction_count", 0) for event in events)
+             total_clarifications = sum(event.get("clarification_count", 0) for event in events)
+             total_reprompts = sum(event.get("re_prompt_count", 0) for event in events)
+             avg_distance = (total_corrections + (total_clarifications * 0.5) + (total_reprompts * 0.3)) / len(events)
+             print(f"Average communication distance: {avg_distance:.2f}")
+             print(f"Total corrections: {total_corrections}")
+             print(f"Total clarifications: {total_clarifications}")
+             print(f"Total re-prompts: {total_reprompts}")
+    elif args.command == "communicate":
+          if not args.audience or not args.hidden_criteria:
+             print("Please provide --audience and --hidden-criteria arguments.")
+          else:
+             audience = args.audience.split(",")
+             criteria = args.hidden_criteria.split(",")
+             print(f\"Audience Assumptions: {audience}\\nHidden Criteria: {criteria}\")
 
 if __name__ == "__main__":
     main()
