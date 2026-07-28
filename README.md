@@ -1,6 +1,6 @@
 # Skills 2026
 
-A collection of 8 production-ready OpenCode AI skills for LLM routing, context management, self-reflection and collaborative skill engineering.
+A collection of 9 production-ready OpenCode AI skills for LLM routing, context management, self-reflection and collaborative skill engineering.
 
 ## Skills Overview
 
