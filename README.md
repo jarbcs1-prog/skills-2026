@@ -1,11 +1,12 @@
 # Skills 2026
 
-A collection of 8 production-ready OpenCode AI skills for LLM routing, context management, self-reflection and collaborative skill engineering.
+A collection of 9 production-ready OpenCode AI skills for LLM routing, context management, self-reflection and collaborative skill engineering. Added provider agnostic ai-improved-self-reflection skill. 
 
 ## Skills Overview
 
 | Skill | Description | Tests |
 |-------|-------------|-------|
+| [ai-improved-self-reflection](#ai-improved-self-reflection) | Enables not only improving the outputs an AI agent produces but the processes used to produce those outputs | CLI verified |
 | [ai-self-reflection](#ai-self-reflection) | Detects friction spikes and provides a protocol for improving AI output quality | CLI verified |
 | [collaborative-skill-engineering](#collaborative-skill-engineering) | Interactive workflow for creating and validating new skills | 2 scripts |
 | [dynamic-context-pruning](#dynamic-context-pruning) | Context window management with restorable compression and staged reduction | 30/30 |
@@ -14,6 +15,37 @@ A collection of 8 production-ready OpenCode AI skills for LLM routing, context m
 | [opencode/delegator](#opcodedelegator) | Automatic task delegation when daily rate limits are reached | Verified |
 | [opencode/dynamic-context-pruning](#opcodedynamic-context-pruning) | OpenCode-specific context engineering with timestamp-based hiding | Inherits |
 | [rate-limit-router](#rate-limit-router) | Smart fallback routing between OpenCode Zen and OpenRouter | 20/20 |
+
+---
+
+## ai-improved-self-reflection
+
+A metacognitive improvement protocol for AI agents. Converts task experiences into process improvements through friction detection, reflection, generalization and validated behavioral updates.
+
+**When to use:**
+- Output quality may have process-level issues
+- Repeated failure patterns emerge
+- User feedback reveals misalignment
+- A strategy worked but may not generalize
+- The agent needs to improve its own operating procedure
+
+**Structure:**
+```
+ai-improved-self-reflection/
+├── SKILL.md                    # Core protocol (detect → diagnose → act → learn)
+├── capability_memory.json      # Stores behavior changes
+├── run_reflection.py           # CLI: preflight + posthoc subcommands
+├── model_response.md           # Source text
+├── original_reflection.md      # Source text
+├── friction_log.md             # Running log of friction events and fixes
+└── LICENSE                     # MIT license 
+```
+
+**Quick start:**
+```bash
+python run_reflection.py preflight            # Interactive 4-question checklist
+python run_reflection.py posthoc --task "..." # Log friction after completion
+```
 
 ---
 
