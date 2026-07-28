@@ -6,7 +6,7 @@ A collection of 8 production-ready OpenCode AI skills for LLM routing, context m
 
 | Skill | Description | Tests |
 |-------|-------------|-------|
-| [ai-self-reflection](#ai-self-reflection) | Detects friction spikes and provides a protocol for improving AI output quality | CLI verified |
+| [ai-improved-self-reflection](#ai-improved-self-reflection) | Metacognitive improvement protocol — friction detection, reflection, distillation and validated capability promotion | 42/42 |
 | [collaborative-skill-engineering](#collaborative-skill-engineering) | Interactive workflow for creating and validating new skills | 2 scripts |
 | [dynamic-context-pruning](#dynamic-context-pruning) | Context window management with restorable compression and staged reduction | 30/30 |
 | [external-llm-router](#external-llm-router) | Multi-provider LLM client with usage monitoring and auto-detection | 26/26 |
@@ -17,30 +17,44 @@ A collection of 8 production-ready OpenCode AI skills for LLM routing, context m
 
 ---
 
-## ai-self-reflection
+## ai-improved-self-reflection
 
-Operational self-reflection for AI agents. Detects friction spikes, maps metaphors to mechanics and provides a lightweight protocol for improving output quality.
+Metacognitive improvement protocol for AI agents. Converts task experiences into validated process improvements through friction detection, reflection, generalization, and behavioral updates.
 
 **When to use:**
 - A completed task felt mechanically "off"
 - User feedback seems misaligned with your intended output
-- You catch yourself using templated language that doesn't fit the context
-- A prompt is clearly out-of-distribution
+- Repeated failure patterns emerge across sessions
+- A strategy worked but may not generalize
+- The agent needs to improve its own operating procedure
 
 **Structure:**
 ```
-ai-self-reflection/
-├── SKILL.md                    # Core protocol (detect → diagnose → act)
-├── scripts/run_reflection.py   # CLI: preflight + posthoc subcommands
-├── references/                 # Source texts (original reflection + technical translation)
-├── friction_log.md             # Running log of friction events and fixes
-└── README.md
+ai-improved-self-reflection/
+├── SKILL.md                  # Skill definition and metacognitive protocol
+├── README.md                 # Project overview and CLI reference
+├── HOWTO.md                  # Integration guide (OpenCode, Hermes, OpenClaw, etc.)
+├── LICENSE                   # MIT License
+├── main.py                   # Entry point
+├── models.py                 # Core data models
+├── storage.py                # JSON persistence
+├── reflection.py             # Reflection event capture
+├── distillation.py           # Pattern detection and candidate generation
+├── capability.py             # Capability promotion layer
+├── validation.py             # Capability validation
+├── analysis.py               # System analysis and reporting
+├── cli.py                    # Command-line interface
+├── memory/                   # Runtime data (gitignored)
+│   └── friction_log.md       # Human-readable reflection log
+└── tests/                    # 42 tests across 7 modules
 ```
 
 **Quick start:**
 ```bash
-python scripts/run_reflection.py preflight          # Interactive 4-question checklist
-python scripts/run_reflection.py posthoc --task "..." # Log friction after completion
+cd ai-improved-self-reflection
+python main.py initialize
+python main.py record --task "Task" --category "Category" --observation "What happened" --friction "Type" --root-cause "Why" --lesson "Learned" --scope "Scope" --confidence 0.8 --action "Next time"
+python main.py report
 ```
 
 ---
@@ -308,6 +322,9 @@ cp external-llm-router/.env.example external-llm-router/.env
 ## Testing
 
 ```bash
+# ai-improved-self-reflection (42 tests)
+cd ai-improved-self-reflection && python -m pytest tests/ -v
+
 # dynamic-context-pruning (30 tests)
 cd dynamic-context-pruning && python -m pytest scripts/test_*.py -v
 
@@ -329,7 +346,7 @@ cd opencode/big-pickle-router && python -m pytest scripts/test_*.py -v
 skills-2026/
 ├── .gitignore
 ├── README.md
-├── ai-self-reflection/           # Self-reflection protocol
+├── ai-improved-self-reflection/  # Metacognitive improvement protocol (42 tests)
 ├── collaborative-skill-engineering/  # Skill creation toolkit
 ├── dynamic-context-pruning/      # Context window management
 ├── external-llm-router/          # Multi-provider LLM client

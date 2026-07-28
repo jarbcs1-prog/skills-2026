@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.deepeval/
+.venv/
+venv/
+memory/reflection_events.json
+memory/capabilities_memory.json
+memory/candidate_lessons.json
+memory/validation_history.json

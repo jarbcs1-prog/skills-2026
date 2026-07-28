@@ -1,19 +1,18 @@
 ---
 name: ai-self-reflection
 description: "A metacognitive improvement protocol for AI agents. Converts task experiences into process improvements through friction detection, reflection, generalization and validated behavioral updates. Use when: (1) output quality may have process-level issues, (2) repeated failure patterns emerge, (3) user feedback reveals misalignment, (4) a strategy worked but may not generalize, (5) the agent needs to improve its own operating procedure."
+version: "2.0.0"
 ---
 
 # AI Self-Reflection Skill
 
 ## Purpose
 
-This skill enables an AI agent to improve not only the outputs it produces, but the processes used to produce those outputs.
+This skill enables an AI agent to improve not only the outputs it produces but the processes used to produce those outputs.
 
 The goal is not introspective performance.
 
-The goal is:
-
-**Convert experience into improved future capability.**
+The goal is: **Convert experience into improved future capability.**
 
 A reflective agent should continuously distinguish between:
 
@@ -137,9 +136,7 @@ Action: Evaluate format before using templates.
 
 # Core Concepts
 
-Each concept follows:
-
-**Detect → Diagnose → Act → Learn**
+Each concept follows: **Detect → Diagnose → Act → Learn**
 
 ---
 
@@ -408,6 +405,7 @@ Purpose: Behavior change.
 ---
 
 The transformation is:
+
 Experience
 ↓
 Reflection
@@ -535,3 +533,62 @@ A successful reflective system becomes less dependent on external correction bec
 The highest quality reflection disappears into behavior.
 
 The agent simply becomes better.
+
+---
+
+# Usage
+
+## CLI Commands
+
+```bash
+# Initialize memory structure
+python main.py initialize
+
+# Record a reflection event
+python main.py record \
+  --task "multi-file refactoring" \
+  --category "structural" \
+  --observation "Defaulted to bullet-point summary when prose would communicate relationships more clearly" \
+  --friction "Response was technically organized but optimized for familiar formatting" \
+  --root-cause "Internal texture pattern: preferred structured output activated before evaluating requirements" \
+  --lesson "Choose representation after identifying user information need" \
+  --scope "Explanations, documentation" \
+  --confidence 0.78 \
+  --evidence 1 \
+  --action "Before applying lists, evaluate whether information is relational or conceptual"
+
+# Distill experiences into candidate lessons
+python main.py distill
+
+# Promote validated candidates to capabilities
+python main.py promote
+
+# Record capability validation
+python main.py validate \
+  --capability "structural pattern recognition" \
+  --task "system design review" \
+  --outcome "Identified shared abstraction between two constraints" \
+  --success \
+  --delta 0.05
+
+# Generate system report
+python main.py report
+```
+
+## Integration with Other Skills
+
+This skill can be used standalone or integrated into agent workflows:
+
+1. **After complex tasks**: Run `record` to capture the reflection event
+2. **Periodically**: Run `distill` to extract candidate lessons from accumulated experiences
+3. **After validation**: Run `validate` to record whether a capability improved outcomes
+4. **For visibility**: Run `report` to see system state and capability health
+
+## Model Agnostic
+
+This skill works with any LLM or AI agent. The core protocol is model-independent:
+
+- Friction detection applies to any agent output
+- Reflection events are stored as structured JSON
+- Capability promotion uses evidence-based scoring
+- Validation measures actual outcome improvement
