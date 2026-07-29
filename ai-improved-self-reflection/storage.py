@@ -45,6 +45,8 @@ FRICTION_LOG = (
     MEMORY_DIR / "friction_log.md"
 )
 
+MAX_RECORD_LIMIT = 1000
+
 
 DEFAULT_MEMORY_FILES = {
     REFLECTION_MEMORY: [],
@@ -186,6 +188,38 @@ def append_json_record(
         path,
         existing,
     )
+
+
+def prune_memory_records(
+    path: Path,
+    limit: int = MAX_RECORD_LIMIT,
+) -> int:
+    """
+    Enforces a sliding window on JSON list records
+    to prevent log inflation.
+
+    Keeps the most recent 'limit' records by
+    trimming from the front of the list.
+
+    Returns the number of records removed.
+    """
+
+    records = load_json(path, [])
+
+    if isinstance(records, list) and len(
+        records
+    ) > limit:
+        pruned_records = records[-limit:]
+
+        removed_count = (
+            len(records) - len(pruned_records)
+        )
+
+        save_json(path, pruned_records)
+
+        return removed_count
+
+    return 0
 
 
 def update_json(

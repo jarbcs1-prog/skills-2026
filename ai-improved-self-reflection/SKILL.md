@@ -1,7 +1,7 @@
 ---
 name: ai-self-reflection
 description: "A metacognitive improvement protocol for AI agents. Converts task experiences into process improvements through friction detection, reflection, generalization and validated behavioral updates. Use when: (1) output quality may have process-level issues, (2) repeated failure patterns emerge, (3) user feedback reveals misalignment, (4) a strategy worked but may not generalize, (5) the agent needs to improve its own operating procedure."
-version: "2.0.0"
+version: "2.1.0"
 ---
 
 # AI Self-Reflection Skill
@@ -573,6 +573,12 @@ python main.py validate \
 
 # Generate system report
 python main.py report
+
+# Inject validated capabilities into agent context
+python main.py bridge --scope general
+
+# Prune old memory records
+python main.py prune --limit 500
 ```
 
 ## Integration with Other Skills
@@ -583,6 +589,30 @@ This skill can be used standalone or integrated into agent workflows:
 2. **Periodically**: Run `distill` to extract candidate lessons from accumulated experiences
 3. **After validation**: Run `validate` to record whether a capability improved outcomes
 4. **For visibility**: Run `report` to see system state and capability health
+5. **At runtime**: Run `bridge --scope` to inject validated capabilities as system prompt constraints
+
+## Runtime Bridge
+
+The `bridge` command generates a compact prompt overlay from validated capabilities. This allows an agent to consume its own learned behavioral constraints at runtime.
+
+How it works:
+
+1. Queries `capabilities_memory.json` for active capabilities matching the requested scope
+2. Ranks capabilities by `validation_score × confidence`
+3. Generates a `### OPERATIONAL CONSTRAINTS` section capped by `TokenBudget` (default: 500 tokens)
+
+This overlay can be injected into the agent's system prompt to dynamically adjust behavior based on accumulated experience.
+
+## Memory Pruning
+
+The `prune` command caps memory file sizes by keeping only the most recent N records. This prevents unbounded growth in long-running agent sessions.
+
+```bash
+# Keep only the most recent 500 records in each memory file
+python main.py prune --limit 500
+```
+
+Applies to both `reflection_events.json` and `validation_history.json`.
 
 ## Model Agnostic
 

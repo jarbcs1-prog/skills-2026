@@ -33,6 +33,9 @@ import json
 
 from storage import (
     initialize_storage,
+    prune_memory_records,
+    REFLECTION_MEMORY,
+    VALIDATION_MEMORY,
 )
 
 from reflection import (
@@ -53,6 +56,10 @@ from validation import (
 
 from analysis import (
     generate_system_report,
+)
+
+from bridge import (
+    RuntimeReflectionBridge,
 )
 
 
@@ -180,6 +187,62 @@ def command_report(
             report,
             indent=2,
         )
+    )
+
+
+def command_bridge(
+    args: argparse.Namespace,
+) -> None:
+    """
+    Render prompt overlay for a given scope.
+
+    Queries capability memory for active entries
+    matching the specified scope and formats them
+    into a compact system prompt injection block.
+    """
+
+    bridge = RuntimeReflectionBridge()
+
+    overlay = bridge.build_system_prompt_overlay(
+        args.scope
+    )
+
+    print(
+        "--- GENERATED PROMPT OVERLAY ---"
+    )
+
+    if overlay:
+        print(overlay)
+    else:
+        print(
+            "[No active capabilities "
+            "matching scope]"
+        )
+
+
+def command_prune(
+    args: argparse.Namespace,
+) -> None:
+    """
+    Prune event logs exceeding record limit.
+
+    Enforces a sliding window on reflection and
+    validation records to prevent log inflation.
+    """
+
+    r_pruned = prune_memory_records(
+        REFLECTION_MEMORY,
+        args.limit,
+    )
+
+    v_pruned = prune_memory_records(
+        VALIDATION_MEMORY,
+        args.limit,
+    )
+
+    print(
+        f"Pruned {r_pruned} reflection records "
+        f"and {v_pruned} validation records."
     )
 
 
@@ -364,6 +427,39 @@ def build_parser() -> argparse.ArgumentParser:
 
     report.set_defaults(
         function=command_report,
+    )
+
+
+    bridge = commands.add_parser(
+        "bridge",
+        help="Render system prompt overlay",
+    )
+
+    bridge.add_argument(
+        "--scope",
+        default="general",
+        help="Target task scope",
+    )
+
+    bridge.set_defaults(
+        function=command_bridge,
+    )
+
+
+    prune = commands.add_parser(
+        "prune",
+        help="Prune excessive log records",
+    )
+
+    prune.add_argument(
+        "--limit",
+        type=int,
+        default=1000,
+        help="Max records to preserve",
+    )
+
+    prune.set_defaults(
+        function=command_prune,
     )
 
 

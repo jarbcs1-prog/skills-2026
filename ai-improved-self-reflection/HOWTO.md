@@ -57,7 +57,7 @@ python main.py --help
 python -m pytest tests/ -v
 ```
 
-You should see the CLI help and 42 passing tests.
+You should see the CLI help and 53 passing tests.
 
 ---
 
@@ -114,6 +114,29 @@ python main.py report
 ```
 
 Returns a JSON report covering reflection statistics, friction patterns, capability status, validation history, and health metrics.
+
+### Inject Capabilities at Runtime (Bridge)
+
+```bash
+python main.py bridge --scope general
+```
+
+Generates a `### OPERATIONAL CONSTRAINTS` prompt overlay from validated capabilities. The overlay is filtered by scope, ranked by `validation_score × confidence`, and capped at `TokenBudget` (default 500 tokens).
+
+Use this to dynamically inject learned behavioral constraints into an agent's system prompt. The bridge queries `capabilities_memory.json` and outputs only active, validated capabilities.
+
+```bash
+# Filter by specific scope
+python main.py bridge --scope cli
+```
+
+### Prune Memory Files
+
+```bash
+python main.py prune --limit 500
+```
+
+Keeps only the most recent N records in `reflection_events.json` and `validation_history.json`. Prevents unbounded memory growth in long-running agent sessions.
 
 ---
 
@@ -252,6 +275,13 @@ candidates = distill_candidates()
 # Generate a report
 report = generate_system_report()
 print(report)
+
+# Generate a runtime prompt overlay from validated capabilities
+from bridge import RuntimeReflectionBridge, TokenBudget
+
+bridge = RuntimeReflectionBridge(TokenBudget(max_capability_tokens=500))
+overlay = bridge.build_system_prompt_overlay(scope="general")
+print(overlay)
 ```
 
 ---
@@ -341,6 +371,7 @@ python -m pytest tests/test_distillation.py -v
 python -m pytest tests/test_capability.py -v
 python -m pytest tests/test_validation.py -v
 python -m pytest tests/test_analysis.py -v
+python -m pytest tests/test_bridge.py -v
 ```
 
-42 tests total across 7 modules.
+53 tests total across 8 modules.

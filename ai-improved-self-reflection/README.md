@@ -50,6 +50,8 @@ python main.py report
 | `promote` | Promote validated candidates to capabilities |
 | `validate` | Record validation evidence for a capability |
 | `report` | Generate a full system report (JSON) |
+| `bridge` | Inject validated capabilities as runtime prompt overlay |
+| `prune` | Cap memory file sizes by keeping most recent N records |
 
 ### record
 
@@ -87,6 +89,22 @@ python main.py report
 
 Returns JSON with: reflection statistics, friction patterns, capability status, validation history, and capability health.
 
+### bridge
+
+```bash
+python main.py bridge --scope general
+```
+
+Generates a compact `### OPERATIONAL CONSTRAINTS` prompt overlay from validated capabilities. Filters by scope, ranks by `validation_score × confidence`, and caps output at `TokenBudget` (default 500 tokens). Use this to inject learned behavioral constraints into an agent's system prompt at runtime.
+
+### prune
+
+```bash
+python main.py prune --limit 500
+```
+
+Keeps only the most recent N records in `reflection_events.json` and `validation_history.json`. Prevents unbounded memory growth in long-running sessions.
+
 ## Project Structure
 
 ```
@@ -103,6 +121,7 @@ ai-improved-self-reflection/
 ├── capability.py         # Capability promotion layer
 ├── validation.py         # Capability validation
 ├── analysis.py           # System analysis and reporting
+├── bridge.py             # Runtime bridge: capability-to-prompt injection
 ├── cli.py                # Command-line interface
 ├── memory/               # Runtime data (gitignored)
 │   ├── friction_log.md   # Human-readable reflection log
@@ -110,7 +129,7 @@ ai-improved-self-reflection/
 │   ├── candidate_lessons.json
 │   ├── capabilities_memory.json
 │   └── validation_history.json
-└── tests/                # 42 tests across 7 modules
+└── tests/                # 53 tests across 8 modules
 ```
 
 ## How It Works
@@ -135,6 +154,18 @@ python -m pytest tests/ -v
 ```
 
 42 tests across models, storage, reflection, distillation, capability, validation, and analysis modules.
+
+## Runtime Bridge
+
+The `bridge` command provides capability-to-prompt injection — the most advanced feature of this skill. It queries validated capabilities, ranks them by quality, and generates a compact overlay that can be injected into any agent's system prompt.
+
+```python
+from bridge import RuntimeReflectionBridge, TokenBudget
+
+bridge = RuntimeReflectionBridge(TokenBudget(max_capability_tokens=500))
+overlay = bridge.build_system_prompt_overlay(scope="general")
+print(overlay)
+```
 
 ## Model Agnostic
 
