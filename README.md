@@ -4,7 +4,7 @@ A collection of 42 AI agent skills for LLM routing, context management, self-ref
 
 ## Authorship & Attribution
 
-I created the following skills from scratch or rebuilt them substantially: **ai-self-reflection**, **collaborative-skill-engineering**, **dynamic-context-pruning** (this version), and **opencode-zen-delegator**.
+I created the following skills from scratch or rebuilt them substantially: **ai-self-reflection**, **collaborative-skill-engineering**, **chinese-translator**, **dynamic-context-pruning** (this version), and **opencode-zen-delegator**.
 
 All other skills in this repository are pre-existing work by their respective creators and contributors, refactored here to improve efficiency, performance, and model-agnostic compatibility. I am deeply grateful to the original authors and all contributors who built and maintained these skills. This repository is a collaborative effort, and credit belongs entirely to those who originated and shaped each skill.
 
