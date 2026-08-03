@@ -1,0 +1,27 @@
+#!/bin/bash
+# Verification Before Completion - pre-commit hook.
+# Blocks commits whose messages claim completion unless verification evidence
+# was gathered by the `verify` CLI in this working tree.
+#
+# Install:
+#   ln -s "$(pwd)/hooks/pre-commit" .git/hooks/pre-commit
+#   chmod +x hooks/pre-commit
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# 1. Completion claims in the commit message require verification evidence.
+if echo "$COMMIT_MSG" | grep -qiE "(done|complete|fixed|finished|ready|working|passes?|verified)"; then
+    # A fresh `.verify/session.jsonl` entry (last 5 minutes) counts as evidence
+    # that the `verify all` gate ran before this commit.
+    if [ -f ".verify/history.jsonl" ] && find ".verify/history.jsonl" -mmin -5 -print -quit 2>/dev/null | grep -q .; then
+        echo "pre-commit: verification evidence found (recent .verify/history.jsonl)"
+    else
+        echo "pre-commit: commit message claims completion but no fresh verification evidence."
+        echo "pre-commit: run:  python -m scripts.cli all --project . --gate"
+        echo "pre-commit: use 'git commit --no-verify' only for emergency overrides (audit required)."
+        exit 1
+    fi
+fi
+
+exit 0

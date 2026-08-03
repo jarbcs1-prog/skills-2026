@@ -1,25 +1,43 @@
 # Skills 2026
 
-A collection of 9 production-ready OpenCode AI skills for LLM routing, context management, self-reflection and collaborative skill engineering.
+A collection of 42 AI agent skills for LLM routing, context management, self-reflection, collaborative skill engineering, and more.
 
 ## Skills Overview
 
-| Skill | Description | Tests |
-|-------|-------------|-------|
-| [ai-improved-self-reflection](#ai-improved-self-reflection) | Metacognitive improvement protocol — friction detection, reflection, distillation and validated capability promotion | 42/42 |
-| [collaborative-skill-engineering](#collaborative-skill-engineering) | Interactive workflow for creating and validating new skills | 2 scripts |
-| [dynamic-context-pruning](#dynamic-context-pruning) | Context window management with restorable compression and staged reduction | 30/30 |
-| [external-llm-router](#external-llm-router) | Multi-provider LLM client with usage monitoring and auto-detection | 26/26 |
-| [opencode/big-pickle-router](#opencodebig-pickle-router) | Routes tasks to opencode/big-pickle via OpenCode Zen API | 4/4 |
-| [opencode/delegator](#opcodedelegator) | Automatic task delegation when daily rate limits are reached | Verified |
-| [opencode/dynamic-context-pruning](#opcodedynamic-context-pruning) | OpenCode-specific context engineering with timestamp-based hiding | Inherits |
-| [rate-limit-router](#rate-limit-router) | Smart fallback routing between OpenCode Zen and OpenRouter | 20/20 |
+| Skill | Description | Status |
+|-------|-------------|--------|
+| [ai-self-reflection](#ai-self-reflection) | Metacognitive improvement protocol — friction detection, reflection, distillation and validated capability promotion | Production-Ready |
+| [brainstorming](#brainstorming) | Idea exploration with design-doc validation, spec diffing, and decision matrices | Production-Ready |
+| [code-quality](#code-quality) | Pre-commit quality gates with config, incremental mode, and IDE integration | Production-Ready |
+| [code-reviewer](#code-reviewer) | Rule engine with 38 regex rules, SARIF output, CI gate, and review history | Production-Ready |
+| [collaborative-skill-engineering](#collaborative-skill-engineering) | Interactive workflow for creating and validating new skills | Production-Ready |
+| [daydream](#daydream) | Insight mining from a note vault with quality scoring, dedup, and knowledge graphs | Production-Ready |
+| [dynamic-context-pruning](#dynamic-context-pruning) | Context window management with restorable compression and staged reduction | Production-Ready |
+| [having-difficult-conversations](#having-difficult-conversations) | Preparation and practice for difficult workplace conversations | Production-Ready |
+| [opencode-zen-delegator](#opencode-zen-delegator) | Unified delegation router for OpenCode Zen and external LLM providers | Production-Ready |
+| [performance-optimizer](#performance-optimizer) | Profiler detection, rule scanning, and benchmark harness with baselines | Production-Ready |
+| [project-planner](#project-planner) | Structured project planning with templates, critical path, and tracking | Production-Ready |
+| [prompt-engineering](#prompt-engineering) | Unified prompt engineering — workflows, EARS methodology, evaluation, model guidance | Production-Ready |
+| [remembering-conversations](#remembering-conversations) | Local conversation index with hybrid search and pattern detection | Production-Ready |
+| [skill-creator](#skill-creator) | Create, modify, and evaluate skills with template scaffolding and CI/CD | Production-Ready |
+| [skill-judge](#skill-judge) | Score skills against official specifications with calibrated rubric | Production-Ready |
+| [skill-reviewer](#skill-reviewer) | Batch skill review with security scan, health tracking, and consistency reports | Production-Ready |
+| [skills-search](#skills-search) | Unified skill discovery, installation, and management | Production-Ready |
+| [strategy-advisor](#strategy-advisor) | Strategy frameworks, decision matrices, scenarios, and templates | Production-Ready |
+| [subagent-driven-development](#subagent-driven-development) | Parallel subagent orchestration with task briefs and review packages | Production-Ready |
+| [systematic-debugging](#systematic-debugging) | 4-phase root cause debugging with worksheets and pattern library | Production-Ready |
+| [telecommunications-expert](#telecommunications-expert) | Telecom network management, billing, 5G, and infrastructure — modular library + CLI | Production-Ready |
+| [test-driven-development](#test-driven-development) | RED-GREEN-REFACTOR TDD enforcement with CLI and language support | Production-Ready |
+| [trust-psychology](#trust-psychology) | Trust signal analysis, audit, A/B testing, and component library | Production-Ready |
+| [verification-before-completion](#verification-before-completion) | Evidence-based verification before claiming completion | Production-Ready |
+| [writing-plans](#writing-plans) | Bite-sized implementation plans with validation | Production-Ready |
+| [writing-skills](#writing-skills) | Skill authoring with init script, test harness, and registry | Production-Ready |
 
 ---
 
-## ai-improved-self-reflection
+## ai-self-reflection
 
-Metacognitive improvement protocol for AI agents. Converts task experiences into validated process improvements through friction detection, reflection, generalization, and behavioral updates.
+Metacognitive improvement protocol for AI agents. Two modes: Lightweight (operational friction detection) and Comprehensive (persistent learning with promotion system).
 
 **When to use:**
 - A completed task felt mechanically "off"
@@ -30,31 +48,22 @@ Metacognitive improvement protocol for AI agents. Converts task experiences into
 
 **Structure:**
 ```
-ai-improved-self-reflection/
-├── SKILL.md                  # Skill definition and metacognitive protocol
+ai-self-reflection/
+├── SKILL.md                  # Unified skill (lightweight + comprehensive modes)
 ├── README.md                 # Project overview and CLI reference
-├── HOWTO.md                  # Integration guide (OpenCode, Hermes, OpenClaw, etc.)
+├── HOWTO.md                  # Integration guide
 ├── LICENSE                   # MIT License
-├── main.py                   # Entry point
-├── models.py                 # Core data models
-├── storage.py                # JSON persistence
-├── reflection.py             # Reflection event capture
-├── distillation.py           # Pattern detection and candidate generation
-├── capability.py             # Capability promotion layer
-├── validation.py             # Capability validation
-├── analysis.py               # System analysis and reporting
-├── cli.py                    # Command-line interface
+├── scripts/                  # CLI and core modules
+├── references/               # Deep-dive documentation
 ├── memory/                   # Runtime data (gitignored)
 │   └── friction_log.md       # Human-readable reflection log
-└── tests/                    # 42 tests across 7 modules
+└── tests/                    # Tests
 ```
 
 **Quick start:**
 ```bash
-cd ai-improved-self-reflection
-python main.py initialize
-python main.py record --task "Task" --category "Category" --observation "What happened" --friction "Type" --root-cause "Why" --lesson "Learned" --scope "Scope" --confidence 0.8 --action "Next time"
-python main.py report
+cd ai-self-reflection
+python scripts/run_reflection.py --mode lightweight
 ```
 
 ---
@@ -131,174 +140,48 @@ python -m pytest scripts/test_*.py -v             # Run 30 tests
 
 ---
 
-## external-llm-router
+## opencode-zen-delegator
 
-Multi-provider LLM client with automatic provider detection, exponential backoff retry and daily usage monitoring. Supports OpenCode Zen, OpenAI, OpenRouter and Anthropic.
+Unified delegation router for OpenCode Zen and external LLM providers with automatic fallback, cost optimization and intelligent routing. Merged from `big-pickle-router`, `delegator`, `external-llm-router`, and `rate-limit-router`.
 
 **When to use:**
-- Setting up third-party API keys
-- Routing tasks to external models
-- Implementing usage-based handoffs between providers
+- Rate limit hit (429 from Zen, OpenRouter, OpenAI or Anthropic)
+- Token budget exceeded
+- Explicit delegation request
+- Complex reasoning tasks
+- Cost optimization — route to cheapest capable model
+- Provider failover — automatic fallback when primary unavailable
 
 **Structure:**
 ```
-external-llm-router/
-├── SKILL.md                    # Provider setup and workflow guide
+opencode-zen-delegator/
+├── SKILL.md                          # Unified delegation router (v2.0.0)
 ├── scripts/
-│   ├── agent.py                # Full CLI client (argparse, retry, auto-detect)
-│   └── monitor.py              # Usage tracker (--add/--status/--reset)
-├── tests/
-│   ├── test_agent.py           # 14 tests
-│   └── test_monitor.py         # 12 tests
-├── references/
-│   ├── api_reference.md
-│   └── provider_setup.md       # Provider-specific setup guides
-├── templates/agent_template.py
+│   ├── zen_client.py                 # Unified client for all providers
+│   ├── router.py                     # Intelligent routing engine
+│   ├── monitor.py                    # Token/cost tracking
+│   ├── circuit_breaker.py            # Circuit breaker for provider failures
+│   ├── health_monitor.py             # Provider health checks
+│   ├── context_manager.py            # Context serialization/handoff
+│   ├── audit_logger.py               # Delegation audit trail
+│   ├── config.py                     # Configuration loading
+│   └── test_router.py                # 20+ tests
 ├── .env.example
 └── README.md
 ```
 
 **Quick start:**
 ```bash
-pip install requests
-cp .env.example .env            # Add your API keys
-python scripts/agent.py --url https://api.opencode.ai/v1 --model opencode/big-pickle --prompt "Hello"
-python scripts/monitor.py --status
-```
-
----
-
-## opencode/big-pickle-router
-
-Routes tasks to the `opencode/big-pickle` reasoning model via the OpenCode Zen API. Includes model testing, token monitoring and key verification.
-
-**When to use:**
-- Approaching token or daily request limits
-- User asks to "use big-pickle" or "delegate to opencode/big-pickle"
-- Complex reasoning tasks requiring extended chain-of-thought
-
-**Structure:**
-```
-opencode/big-pickle-router/
-├── SKILL.md                          # Routing workflow
-├── scripts/
-│   ├── big_pickle_agent.py           # Main agent client
-│   ├── delegate_manager.py           # Context save/load for handoffs
-│   ├── token_monitor.py              # Daily token quota tracking
-│   ├── verify_new_key.py             # Validate API keys
-│   ├── test_common_models.py         # Test common model endpoints
-│   ├── test_opencode_zen.py          # Test OpenCode Zen models
-│   ├── test_opencode_zen_free.py     # Test free tier models
-│   ├── test_opencode_zen_v2.py       # Test v2 endpoints
-│   └── test_specific_free_models.py  # Test specific free models
-├── .env.example
-└── README.md
-```
-
-**Quick start:**
-```bash
-export OPENCODE_API_KEY="your-key"
-python scripts/verify_new_key.py --key $OPENCODE_API_KEY
-python scripts/big_pickle_agent.py "Explain quantum computing" 
-python scripts/token_monitor.py 500
-```
-
----
-
-## opencode/delegator
-
-Automatic task delegation to `opencode/big-pickle` when daily rate limits are reached. Saves session context, prepares delegation briefs and executes handoffs.
-
-**When to use:**
-- System warning about token or daily request rate limits
-- User asks to "delegate to opencode/big-pickle"
-- Complex coding tasks requiring extended reasoning
-
-**Structure:**
-```
-opencode/delegator/
-├── SKILL.md                        # Delegation workflow
-├── scripts/
-│   ├── big_pickle_agent.py         # Delegation execution client
-│   └── delegate_manager.py         # Context save/load manager
-├── .env.example
-└── README.md
-```
-
-**Quick start:**
-```bash
-export OPENCODE_API_KEY="your-key"
-python scripts/big_pickle_agent.py "Complete this task: ..."
-```
-
----
-
-## opencode/dynamic-context-pruning
-
-OpenCode-specific context engineering with timestamp-based message hiding, cache-friendly prefix preservation and agent-tiered compaction. Designed to work alongside OpenCode's native compaction agent.
-
-**When to use:**
-- Long-horizon OpenCode sessions exceeding context windows
-- Need OpenCode-specific optimizations (timestamp hiding, prefix preservation)
-- Complementing the official DCP plugin
-
-**Structure:**
-```
-opencode/dynamic-context-pruning/
-├── SKILL.md                                    # OpenCode-specific guide (351 lines)
-├── references/opencode_context_engineering.md  # OpenCode architecture details
-└── README.md
-```
-
-This skill is a focused overlay on the root `dynamic-context-pruning` skill. Share scripts and examples from the parent directory.
-
----
-
-## rate-limit-router
-
-Smart fallback routing between OpenCode Zen and OpenRouter. Automatically reroutes API calls to the alternate provider when a 429 is received, with exponential backoff.
-
-**When to use:**
-- A request returns 429 from either provider
-- User asks to "use rate limit router" or "try the other API"
-- Long sessions needing provider failover
-
-**Structure:**
-```
-rate-limit-router/
-├── SKILL.md                        # Routing logic and model mappings
-├── config.json                     # Model-to-provider mapping with fallbacks
-├── scripts/
-│   ├── rate_limit_router.py        # Main router with retry logic
-│   └── test_router.py             # 20 tests
-├── LICENSE                         # MIT
-├── .env.example
-└── README.md
-```
-
-**Quick start:**
-```bash
-pip install requests
-cp .env.example .env                # Set ZEN_API_KEY and OPENROUTER_API_KEY
-python scripts/rate_limit_router.py "your prompt" --model big-pickle
-python scripts/rate_limit_router.py --status
+pip install requests tenacity pyyaml
+cp .env.example .env
+opencode-zen-delegator delegate "Continue the refactoring..." --context task_context.json
+opencode-zen-delegator status --verbose
+opencode-zen-delegator route --task "complex reasoning" --explain
 ```
 
 ---
 
 ## Environment Variables
-
-All skills use environment variables for API keys. No hardcoded credentials.
-
-| Variable | Used By | Description |
-|----------|---------|-------------|
-| `OPENCODE_API_KEY` | big-pickle-router, delegator | OpenCode Zen API key |
-| `ZEN_API_KEY` | rate-limit-router, external-llm-router | OpenCode Zen API key |
-| `OPENROUTER_API_KEY` | rate-limit-router, external-llm-router | OpenRouter API key |
-| `OPENAI_API_KEY` | external-llm-router | OpenAI API key |
-| `ANTHROPIC_API_KEY` | external-llm-router | Anthropic API key |
-
-Each skill includes a `.env.example` template.
 
 ---
 
@@ -309,12 +192,10 @@ git clone https://github.com/jarbcs1-prog/skills-2026.git
 cd skills-2026
 
 # Install dependencies (varies by skill)
-pip install requests tiktoken
+pip install requests tiktoken tenacity pyyaml
 
 # Copy environment templates
-cp rate-limit-router/.env.example rate-limit-router/.env
-cp external-llm-router/.env.example external-llm-router/.env
-# ... repeat for other skills as needed
+cp opencode-zen-delegator/.env.example opencode-zen-delegator/.env
 ```
 
 ---
@@ -322,20 +203,77 @@ cp external-llm-router/.env.example external-llm-router/.env
 ## Testing
 
 ```bash
-# ai-improved-self-reflection (42 tests)
-cd ai-improved-self-reflection && python -m pytest tests/ -v
+# ai-self-reflection
+cd ai-self-reflection && python -m pytest tests/ -v
 
-# dynamic-context-pruning (30 tests)
+# dynamic-context-pruning
 cd dynamic-context-pruning && python -m pytest scripts/test_*.py -v
 
-# external-llm-router (26 tests)
-cd external-llm-router && python -m pytest tests/ -v
+# opencode-zen-delegator
+cd opencode-zen-delegator && python -m pytest scripts/test_*.py -v
 
-# rate-limit-router (20 tests)
-cd rate-limit-router && python -m pytest scripts/test_router.py -v
+# having-difficult-conversations
+cd having-difficult-conversations && python -m pytest tests/ -v
 
-# opencode/big-pickle-router (4 tests)
-cd opencode/big-pickle-router && python -m pytest scripts/test_*.py -v
+# project-planner
+cd project-planner && python -m pytest tests/ -v
+
+# systematic-debugging
+cd systematic-debugging && python -m pytest tests/ -v
+
+# test-driven-development
+cd test-driven-development && python -m pytest tests/ -v
+
+# trust-psychology
+cd trust-psychology && python -m pytest tests/ -v
+
+# subagent-driven-development
+cd subagent-driven-development && python -m pytest tests/ -v
+
+# verification-before-completion
+cd verification-before-completion && python -m pytest tests/ -v
+
+# writing-plans
+cd writing-plans && python -m pytest tests/ -v
+
+# writing-skills
+cd writing-skills && python -m pytest tests/ -v
+
+# skill-creator
+cd skill-creator && python -m pytest tests/ -v
+
+# skill-judge
+cd skill-judge && python -m pytest tests/ -v
+
+# telecommunications-expert
+cd telecommunications-expert && python -m pytest tests/ -v
+
+# brainstorming
+cd brainstorming && python -m pytest tests/ -v
+
+# code-quality
+cd code-quality && python -m pytest tests/ -v
+
+# code-reviewer
+cd code-reviewer && python -m pytest tests/ -v
+
+# daydream
+cd daydream && python -m pytest tests/ -v
+
+# performance-optimizer
+cd performance-optimizer && python -m pytest tests/ -v
+
+# remembering-conversations
+cd remembering-conversations && python -m pytest tests/ -v
+
+# skill-reviewer
+cd skill-reviewer && python -m pytest tests/ -v
+
+# skills-search
+cd skills-search && python -m pytest tests/ -v
+
+# strategy-advisor
+cd strategy-advisor && python -m pytest tests/ -v
 ```
 
 ---
@@ -346,15 +284,35 @@ cd opencode/big-pickle-router && python -m pytest scripts/test_*.py -v
 skills-2026/
 ├── .gitignore
 ├── README.md
-├── ai-improved-self-reflection/  # Metacognitive improvement protocol (42 tests)
+├── execution/
+│   └── execution_plan.md
+├── ai-self-reflection/        # Metacognitive improvement protocol
+├── brainstorming/             # Design-doc validation + decision matrices
+├── code-quality/              # Pre-commit quality gates
+├── code-reviewer/             # Rule-engine code reviews + SARIF
 ├── collaborative-skill-engineering/  # Skill creation toolkit
-├── dynamic-context-pruning/      # Context window management
-├── external-llm-router/          # Multi-provider LLM client
-├── opencode/                     # OpenCode-specific skills
-│   ├── big-pickle-router/        # Model routing
-│   ├── delegator/                # Task delegation
-│   └── dynamic-context-pruning/  # OpenCode context pruning
-└── rate-limit-router/            # Provider failover
+├── daydream/                  # Insight mining + knowledge graphs
+├── dynamic-context-pruning/   # Context window management
+├── having-difficult-conversations/   # Conversation preparation
+├── opencode-zen-delegator/    # Unified delegation router
+├── performance-optimizer/     # Profilers + benchmark harness
+├── project-planner/           # Structured project planning
+├── prompt-engineering/        # Unified prompt engineering
+├── remembering-conversations/ # Local conversation index
+├── skill-creator/             # Skill authoring and evaluation
+├── skill-judge/               # Skill scoring against specs
+├── skill-reviewer/            # Batch skill review
+├── skills-search/             # Unified skill discovery
+├── strategy-advisor/          # Strategy frameworks + decision tools
+├── subagent-driven-development/  # Parallel subagent orchestration
+├── systematic-debugging/      # 4-phase root cause debugging
+├── telecommunications-expert/ # Telecom NMS/billing/5G library + CLI
+├── test-driven-development/   # RED-GREEN-REFACTOR TDD enforcement
+├── trust-psychology/          # Trust signal analysis and audit
+├── verification-before-completion/  # Evidence before completion claims
+├── writing-plans/             # Implementation plan authoring
+├── writing-skills/            # Skill authoring toolkit
+└── [other skills...]
 ```
 
 ---

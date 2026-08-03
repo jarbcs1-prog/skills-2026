@@ -1,0 +1,35 @@
+name: code-reviewer
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml || true
+          pip install pytest || true
+
+      - name: Run code-reviewer (CI mode)
+        run: |
+          python -m scripts.cli review --files . --cwd . --ci --max-critical 0 --format sarif > review.sarif
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: review.sarif
+          checkout_path: ${{ github.workspace }}

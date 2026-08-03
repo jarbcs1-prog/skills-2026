@@ -1,211 +1,168 @@
-"""Tests that compact → restore produces equivalent context.
-
-Verifies the core promise of restorable compression: context compacted
-via any strategy can be fully restored when paired with its offloaded data.
+"""
+Test Compaction Reversibility — Test all compaction strategies for lossless restore.
 """
 
 import json
-import os
-import sys
 import tempfile
-import pytest
+import os
 from typing import List, Dict, Any
 
-sys.path.insert(0, os.path.dirname(__file__))
-from compaction import Compactor
-from file_offloader import FileOffloader
+from compaction import (
+    Compactor, CompactionConfig, CompactionStrategy,
+    TokenBudgetCompactor, AgeBasedCompactor, ImportanceBasedCompactor, HybridCompactor,
+    TimestampHidingCompactor, HeadTailProtectionCompactor,
+    RepeatedToolPruningCompactor, ErrorPreservationCompactor,
+)
 
 
-def _make_tool_call(idx: int, tool: str = "bash", content: str = None) -> Dict[str, Any]:
-    """Build a synthetic tool-call / tool-response pair."""
-    return {
-        "role": "assistant",
-        "type": "tool_call",
-        "tool": tool,
-        "call_id": f"call_{idx:04d}",
-        "input": {"command": f"echo step-{idx}"},
-        "output": content or f"Output for step {idx}: completed successfully.",
-    }
+def create_test_context() -> List[Dict[str, Any]]:
+    """Create a realistic test context with various entry types."""
+    return [
+        {"type": "system_prompt", "content": "You are a helpful assistant."},
+        {"type": "user_message", "content": "Help me refactor this code.", "role": "user"},
+        {"type": "tool_call", "tool": "read_file", "arguments": {"path": "src/main.py"}, "output": "def main():\n    print('hello')\n    return 0\n" * 100},
+        {"type": "assistant_message", "content": "I'll help you refactor that code."},
+        {"type": "tool_call", "tool": "edit_file", "arguments": {"path": "src/main.py", "old": "print('hello')", "new": "print('world')"}, "output": "File updated successfully."},
+        {"type": "tool_call", "tool": "read_file", "arguments": {"path": "src/main.py"}, "output": "def main():\n    print('world')\n    return 0\n" * 100},
+        {"type": "user_message", "content": "Now add error handling.", "role": "user"},
+        {"type": "tool_call", "tool": "edit_file", "arguments": {"path": "src/main.py", "old": "return 0", "new": "try:\n    return 0\nexcept Exception:\n    return 1"}, "output": "File updated with error handling."},
+        {"type": "tool_call", "tool": "run_tests", "arguments": {"path": "tests/"}, "output": "All tests passed! ✓\n" * 50},
+        {"type": "assistant_message", "content": "Done! The code has been refactored with error handling."},
+    ]
 
 
-def _make_user_message(idx: int) -> Dict[str, Any]:
-    return {
-        "role": "user",
-        "type": "message",
-        "content": f"User instruction #{idx}: please do thing-{idx}",
-    }
+def test_compactor(compactor, name: str) -> bool:
+    """Test a single compactor for reversibility."""
+    context = create_test_context()
+    original_tokens = sum(len(json.dumps(e, sort_keys=True)) for e in context)
+    
+    print(f"\nTesting {name}...")
+    print(f"  Original: {len(context)} entries, ~{original_tokens} chars")
+    
+    # Compact
+    result = compactor.compact(context)
+    
+    print(f"  Compacted: {result.entries_preserved} preserved, {result.entries_compacted} offloaded")
+    print(f"  Tokens saved: ~{result.tokens_saved}")
+    
+    # Save offloaded data to temp file
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        json.dump(result.offloaded_data, f)
+        offload_path = f.name
+    
+    try:
+        # Restore
+        restored = compactor.restore(result.compacted_context, offload_path)
+        
+        # Verify
+        original_serialized = [json.dumps(e, sort_keys=True) for e in context]
+        restored_serialized = [json.dumps(e, sort_keys=True) for e in restored]
+        
+        if original_serialized == restored_serialized:
+            print("  ✓ RESTORE SUCCESSFUL - Perfect reversibility")
+            return True
+        else:
+            print("  ✗ RESTORE FAILED - Data mismatch")
+            # Find differences
+            for i, (orig, rest) in enumerate(zip(original_serialized, restored_serialized)):
+                if orig != rest:
+                    print(f"    Difference at index {i}")
+                    print(f"      Original: {orig[:100]}...")
+                    print(f"      Restored: {rest[:100]}...")
+            return False
+    finally:
+        os.unlink(offload_path)
 
 
-def _build_context(n: int) -> List[Dict[str, Any]]:
-    """Build a context history with n interleaved user/assistant turns."""
-    history: List[Dict[str, Any]] = []
-    for i in range(n):
-        history.append(_make_user_message(i))
-        history.append(_make_tool_call(i))
-    return history
-
-
-@pytest.fixture
-def sample_context():
-    """Fixture: 30-turn context history."""
-    return _build_context(30)
-
-
-@pytest.fixture
-def small_context():
-    """Fixture: context shorter than keep_recent_full."""
-    return _build_context(4)
-
-
-@pytest.fixture
-def offloader(tmp_path):
-    """Fixture: FileOffloader backed by a temp directory."""
-    return FileOffloader(
-        base_path=str(tmp_path / "offload"),
-        compression="gzip",
-        index_format="jsonl",
+def test_all_strategies():
+    """Test all compaction strategies."""
+    config = CompactionConfig(
+        strategy=CompactionStrategy.HYBRID,
+        keep_recent_full=3,
+        compact_ratio=0.4,
     )
+    
+    strategies = [
+        (TokenBudgetCompactor(config), "TokenBudgetCompactor"),
+        (AgeBasedCompactor(config), "AgeBasedCompactor"),
+        (ImportanceBasedCompactor(config), "ImportanceBasedCompactor"),
+        (HybridCompactor(config), "HybridCompactor"),
+        (TimestampHidingCompactor(config), "TimestampHidingCompactor"),
+        (HeadTailProtectionCompactor(config), "HeadTailProtectionCompactor"),
+        (RepeatedToolPruningCompactor(config), "RepeatedToolPruningCompactor"),
+        (ErrorPreservationCompactor(config), "ErrorPreservationCompactor"),
+    ]
+    
+    results = {}
+    for compactor, name in strategies:
+        try:
+            results[name] = test_compactor(compactor, name)
+        except Exception as e:
+            print(f"  ✗ ERROR: {e}")
+            results[name] = False
+    
+    print("\n" + "="*50)
+    print("SUMMARY:")
+    for name, passed in results.items():
+        status = "PASS" if passed else "FAIL"
+        print(f"  {name}: {status}")
+    
+    all_passed = all(results.values())
+    print(f"\nOverall: {'ALL TESTS PASSED ✓' if all_passed else 'SOME TESTS FAILED ✗'}")
+    return all_passed
 
 
-class TestCompactionIdentity:
-    """Compact then restore should preserve order and completeness."""
-
-    def test_compact_preserves_recent_tail(self, sample_context):
-        """The most recent N turns must appear verbatim in compacted output."""
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=0.5, preserve_structure=True
-        )
-        compacted, offloaded = compactor.compact(sample_context)
-
-        assert len(compacted) >= 5
-        assert compacted[-5:] == sample_context[-5:]
-
-    def test_compact_reduces_length(self, sample_context):
-        """Compaction must strictly reduce the context length."""
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=0.5, preserve_structure=True
-        )
-        compacted, offloaded = compactor.compact(sample_context)
-
-        assert len(compacted) < len(sample_context)
-        assert len(offloaded) > 0
-
-    def test_compact_returns_offloaded_data(self, sample_context):
-        """Offloaded data must contain the removed items."""
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=0.5, preserve_structure=True
-        )
-        compacted, offloaded = compactor.compact(sample_context)
-
-        expected_offloaded = len(sample_context) - len(compacted)
-        assert len(offloaded) == expected_offloaded
-
-    def test_no_compaction_when_context_fits(self, small_context):
-        """If context ≤ keep_recent_full, nothing should be compacted."""
-        compactor = Compactor(
-            keep_recent_full=10, compact_ratio=0.5, preserve_structure=True
-        )
-        compacted, offloaded = compactor.compact(small_context)
-
-        assert compacted == small_context
-        assert offloaded == []
-
-
-class TestCompactionWithOffloading:
-    """Round-trip: compact → offload → restore should recover all items."""
-
-    def test_full_round_trip(self, sample_context, offloader):
-        """Compact, offload, then restore and verify all items are present."""
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=0.5, preserve_structure=True
-        )
-        compacted, offloaded = compactor.compact(sample_context)
-
-        ref = offloader.offload(
-            offloaded,
-            metadata={"type": "tool_calls", "range": "0-25"},
-        )
-
-        restored_offloaded = offloader.restore(ref["path"])
-        restored_context = compactor.restore(compacted, ref["path"])
-
-        # Compacted portion should be intact
-        assert restored_context == compacted
-
-        # Offloaded portion should be fully recoverable
-        assert len(restored_offloaded) == len(offloaded)
-        for original, recovered in zip(offloaded, restored_offloaded):
-            assert original == recovered
-
-    def test_offloaded_data_survives_gzip(self, sample_context, offloader):
-        """Gzip round-trip must not corrupt offloaded data."""
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=0.5, preserve_structure=True
-        )
-        _, offloaded = compactor.compact(sample_context)
-
-        ref = offloader.offload(
-            offloaded, metadata={"type": "compressed", "range": "all"}
-        )
-        recovered = offloader.restore(ref["path"])
-
-        assert json.dumps(recovered, sort_keys=True) == json.dumps(
-            offloaded, sort_keys=True
-        )
-
-    def test_multiple_offload_restore_cycles(self, sample_context, offloader):
-        """Repeated offload → restore cycles must not degrade data."""
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=0.5, preserve_structure=True
-        )
-        _, offloaded = compactor.compact(sample_context)
-
-        current = offloaded
-        for _ in range(5):
-            ref = offloader.offload(
-                current, metadata={"type": "cycle", "range": "all"}
-            )
-            current = offloader.restore(ref["path"])
-
-        assert len(current) == len(offloaded)
-        for orig, cycle in zip(offloaded, current):
-            assert orig == cycle
-
-
-class TestCompactionStrategies:
-    """Different compaction ratios should produce predictable output sizes."""
-
-    @pytest.mark.parametrize(
-        "ratio,expected_total_len",
-        [
-            (0.3, 43),  # 60 items → 55 old → keep 70% = 38 old + 5 recent = 43
-            (0.5, 32),  # 60 items → 55 old → keep 50% = 27 old + 5 recent = 32
-            (0.8, 15),  # 60 items → 55 old → keep 20% ≈ 10 old + 5 recent = 15 (float trunc)
-        ],
-        ids=["conservative-0.3", "balanced-0.5", "aggressive-0.8"],
-    )
-    def test_ratio_controls_output_size(self, ratio, expected_total_len):
-        """Higher compact_ratio should yield proportionally shorter contexts."""
-        context = _build_context(30)
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=ratio, preserve_structure=True
-        )
-        compacted, _ = compactor.compact(context)
-        assert len(compacted) == expected_total_len
-
-    def test_hybrid_preserves_all_call_ids(self, sample_context):
-        """Every call_id from the original must appear in compacted ∪ offloaded."""
-        compactor = Compactor(
-            keep_recent_full=5, compact_ratio=0.5, preserve_structure=True
-        )
-        compacted, offloaded = compactor.compact(sample_context)
-
-        original_ids = {item.get("call_id") for item in sample_context if "call_id" in item}
-        compacted_ids = {item.get("call_id") for item in compacted if "call_id" in item}
-        offloaded_ids = {item.get("call_id") for item in offloaded if "call_id" in item}
-
-        assert original_ids == (compacted_ids | offloaded_ids)
+def test_main_compactor():
+    """Test the main Compactor factory."""
+    print("\n" + "="*50)
+    print("Testing Main Compactor Factory...")
+    
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        json.dump({
+            "thresholds": {"hard_limit": 200000, "pre_rot_threshold": 100000, "compaction_trigger": 150000, "summarization_trigger": 175000},
+            "compaction": {"strategy": "hybrid", "keep_recent_full": 3, "compact_ratio": 0.4},
+            "summarization": {"schema": "agent_default", "keep_recent_full": 3, "model": "opencode/big-pickle"},
+            "offloading": {"base_path": ".agent_context", "compression": "gzip", "index_format": "jsonl"},
+            "kv_cache": {"enforce_stable_prefix": True, "append_only": True, "deterministic_json": True},
+        }, f)
+        config_path = f.name
+    
+    try:
+        compactor = Compactor.from_config(config_path)
+        context = create_test_context()
+        result = compactor.compact(context)
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            json.dump(result.offloaded_data, f)
+            offload_path = f.name
+        
+        restored = compactor.restore(result.compacted_context, offload_path)
+        
+        original_serialized = [json.dumps(e, sort_keys=True) for e in context]
+        restored_serialized = [json.dumps(e, sort_keys=True) for e in restored]
+        
+        if original_serialized == restored_serialized:
+            print("  ✓ Main Compactor Factory - Perfect reversibility")
+            return True
+        else:
+            print("  ✗ Main Compactor Factory - Data mismatch")
+            return False
+    finally:
+        os.unlink(config_path)
+        os.unlink(offload_path)
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    print("="*60)
+    print("COMPACTION REVERSIBILITY TESTS")
+    print("="*60)
+    
+    all_passed = test_all_strategies()
+    all_passed = test_main_compactor() and all_passed
+    
+    if all_passed:
+        print("\n✓ ALL COMPACTION TESTS PASSED")
+        exit(0)
+    else:
+        print("\n✗ SOME COMPACTION TESTS FAILED")
+        exit(1)

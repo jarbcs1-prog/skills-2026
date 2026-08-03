@@ -1,0 +1,7 @@
+.skills-search/
+.conversation_cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.deepeval/

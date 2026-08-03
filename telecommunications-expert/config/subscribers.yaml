@@ -1,0 +1,32 @@
+# Sample subscribers (BSS) used by `telecom billing` commands.
+subscribers:
+  - subscriber_id: SUB-001
+    account_number: "ACC-0001"
+    name: "Jane Doe"
+    phone_number: "+1-555-0101"
+    email: "jane.doe@example.com"
+    address:
+      city: "Metroville"
+      street: "1 Main St"
+    plan_id: "PLAN-BASIC"
+    status: "active"
+  - subscriber_id: SUB-002
+    account_number: "ACC-0002"
+    name: "John Smith"
+    phone_number: "+1-555-0102"
+    email: "john.smith@example.com"
+    address:
+      city: "Riverton"
+      street: "22 Oak Ave"
+    plan_id: "PLAN-UNLIMITED"
+    status: "active"
+  - subscriber_id: SUB-003
+    account_number: "ACC-0003"
+    name: "Suspended User"
+    phone_number: "+1-555-0103"
+    email: "suspended@example.com"
+    address:
+      city: "Metroville"
+      street: "3 Elm St"
+    plan_id: "PLAN-BASIC"
+    status: "suspended"

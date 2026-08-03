@@ -1,0 +1,25 @@
+name: skill-test
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e .
+      - name: Validate skill
+        run: python scripts/validate_skill.py .
+      - name: Run tests
+        run: python -m pytest tests/ -q
+      - name: Check evals.json parses
+        run: python -c "import json; json.load(open('evals/evals.json'))"
+      - name: Check skill.yaml manifest
+        run: python -c "import yaml; d=yaml.safe_load(open('skill.yaml')); assert d['name'] and d['version']"

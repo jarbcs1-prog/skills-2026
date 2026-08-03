@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "telecommunications-expert"
+version = "1.0.0"
+description = "Telecom network management, billing and 5G expertise as runnable modules"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+[tool.setuptools]
+packages = ["core", "nms", "billing", "fiveg", "api", "scripts"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

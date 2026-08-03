@@ -1,7 +1,7 @@
 import json
 from scripts.context_monitor import ContextMonitor
 from scripts.compaction import Compactor
-from scripts.summarization import Summarizer, SummarySchema
+from scripts.summarization import Summarizer
 from scripts.file_offloader import FileOffloader
 
 # Dummy function to estimate tokens

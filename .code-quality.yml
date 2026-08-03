@@ -1,0 +1,57 @@
+version: 1
+
+languages:
+  typescript:
+    enabled: true
+    typecheck: true
+    lint: true
+    format: true
+    config: "tsconfig.json"
+  python:
+    enabled: true
+    typecheck: "mypy"
+    lint: "ruff"
+    format: "black"
+  rust:
+    enabled: true
+    check: "cargo check"
+    clippy: true
+    format: "rustfmt"
+  go:
+    enabled: true
+    vet: true
+    lint: "golangci-lint"
+    format: "gofmt"
+
+checks:
+  markdown:
+    enabled: true
+    rules:
+      - "no-trailing-whitespace"
+      - "no-missing-newline"
+      - "heading-style"
+  dependencies:
+    enabled: false
+    fail_on: "high"
+
+thresholds:
+  max_errors: 0
+  max_warnings: 100
+  fail_on_security: true
+
+ignore:
+  - "dist/"
+  - "build/"
+  - "*.generated.ts"
+  - "legacy/"
+  - "node_modules/"
+  - ".next/"
+
+incremental:
+  enabled: true
+  base: "HEAD~1"
+  cache: true
+
+reporting:
+  format: "text"
+  output: null

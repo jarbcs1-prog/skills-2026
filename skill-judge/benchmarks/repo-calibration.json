@@ -1,0 +1,17 @@
+{
+  "name": "repo-calibration",
+  "description": "Expected grade bands for the skills_2026 repository skills. Run: python scripts/judge_skill.py calibrate --benchmarks-dir benchmarks",
+  "skills_dir": "../..",
+  "expectations": [
+    {"skill": "code-reviewer", "band": "needs_work"},
+    {"skill": "project-planner", "band": "adequate"},
+    {"skill": "skill-creator", "band": "expert"},
+    {"skill": "skill-judge", "band": "expert"},
+    {"skill": "brainstorming", "band": "expert"},
+    {"skill": "dynamic-context-pruning", "band": "adequate"},
+    {"skill": "chinese-translator", "band": "insufficient"},
+    {"skill": "cybersecurity-copilot", "band": "needs_work"},
+    {"skill": "master-of-dissent", "band": "needs_work"},
+    {"skill": "rap-writer", "band": "insufficient"}
+  ]
+}

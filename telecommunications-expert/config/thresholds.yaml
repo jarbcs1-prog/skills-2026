@@ -1,0 +1,15 @@
+# Warning/critical thresholds per metric (global defaults).
+# Loaded by core.Config.get_threshold(metric, vendor).
+defaults:
+  cpu_utilization:
+    warning: 70.0
+    critical: 90.0
+  memory_utilization:
+    warning: 80.0
+    critical: 95.0
+  eth0_traffic:
+    warning: 800.0
+    critical: 950.0
+  eth1_traffic:
+    warning: 800.0
+    critical: 950.0

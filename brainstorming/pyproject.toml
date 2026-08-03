@@ -1,0 +1,26 @@
+[project]
+name = "brainstorming"
+version = "2.0.0"
+description = "Brainstorm, design and spec out ideas before implementation"
+readme = "SKILL.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+brainstorming = "scripts.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM", "T20", "ARG"]
+ignore = ["S101", "T201"]
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"

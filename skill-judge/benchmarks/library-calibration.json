@@ -1,0 +1,10 @@
+{
+  "name": "library-calibration",
+  "description": "Expected grade bands for reference skills in the local agent skills library (docx/xlsx/pdf are only installed there, not in this repo). Run: python scripts/judge_skill.py calibrate --benchmarks-dir benchmarks",
+  "skills_dir": "C:/Users/PC Principal/.agents/skills",
+  "expectations": [
+    {"skill": "docx", "band": "strong"},
+    {"skill": "xlsx", "band": "strong"},
+    {"skill": "pdf", "band": "needs_work"}
+  ]
+}

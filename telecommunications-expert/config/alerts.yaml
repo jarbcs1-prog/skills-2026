@@ -1,0 +1,17 @@
+# Alerting channels configuration.
+channels:
+  email:
+    enabled: true
+    to: "nms@operator.example.com"
+    smtp: "smtp.example.com"
+  sms:
+    enabled: false
+    gateway: "sms-gateway.example.com"
+  pagerduty:
+    enabled: false
+    service_key: ""
+
+# Severities that trigger real-time notifications.
+notification_severities:
+  - "CRITICAL"
+  - "MAJOR"

@@ -16,7 +16,6 @@ Returns exit code 0 on success, 1 on error.
 """
 
 import argparse
-import os
 import sys
 from pathlib import Path
 

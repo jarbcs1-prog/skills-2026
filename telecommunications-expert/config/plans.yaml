@@ -1,0 +1,24 @@
+# Service plans (BSS) used by `telecom billing` commands.
+plans:
+  - plan_id: "PLAN-BASIC"
+    name: "Basic"
+    description: "Entry-level bundle"
+    monthly_fee: 29.99
+    data_allowance_gb: 10.0
+    voice_minutes: 300
+    sms_count: 100
+    overage_rates:
+      data_per_gb: 5.00
+      voice_per_minute: 0.10
+      sms_per_message: 0.05
+  - plan_id: "PLAN-UNLIMITED"
+    name: "Unlimited"
+    description: "Unlimited everything"
+    monthly_fee: 79.99
+    data_allowance_gb: 100.0
+    voice_minutes: 9999
+    sms_count: 9999
+    overage_rates:
+      data_per_gb: 10.00
+      voice_per_minute: 0.20
+      sms_per_message: 0.10

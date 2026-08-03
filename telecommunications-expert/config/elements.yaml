@@ -1,0 +1,47 @@
+# Sample network elements used by `telecom nms` commands.
+network_elements:
+  - element_id: NE-001
+    element_type: "base_station"
+    name: "Downtown Macro Site"
+    location:
+      region: "North"
+      city: "Metroville"
+    ip_address: "10.0.1.11"
+    status: "active"
+    vendor: "Cisco"
+    model: "ASR-9000"
+    software_version: "7.3.1"
+    capacity:
+      bandwidth_gbps: 10.0
+    utilization:
+      bandwidth_percent: 65.0
+  - element_id: NE-002
+    element_type: "router"
+    name: "Core Router 2"
+    location:
+      region: "South"
+      city: "Riverton"
+    ip_address: "10.0.2.21"
+    status: "active"
+    vendor: "Huawei"
+    model: "NE40E-X3"
+    software_version: "8.1.0"
+    capacity:
+      bandwidth_gbps: 40.0
+    utilization:
+      bandwidth_percent: 48.0
+  - element_id: NE-003
+    element_type: "switch"
+    name: "Edge Switch 7"
+    location:
+      region: "North"
+      city: "Metroville"
+    ip_address: "10.0.1.31"
+    status: "maintenance"
+    vendor: "Generic"
+    model: "EX-4600"
+    software_version: "5.2.0"
+    capacity:
+      bandwidth_gbps: 1.0
+    utilization:
+      bandwidth_percent: 20.0
