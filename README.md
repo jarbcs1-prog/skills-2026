@@ -1,6 +1,6 @@
 # Skills 2026
 
-A collection of 42 AI agent skills for LLM routing, context management, self-reflection, collaborative skill engineering and more.
+A collection of 33 intended AI model-agnostic agent skills for LLM routing, context management, self-reflection, collaborative skill engineering and more.
 
 ## Authorship & Attribution
 
