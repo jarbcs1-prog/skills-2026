@@ -1,13 +1,7 @@
 ---
 name: ai-self-reflection
-description: |
-  Tiered metacognitive improvement protocol for AI agents. Lightweight mode: friction detection, elegance mapping, honesty checks, unseen layer logging. Comprehensive mode: 3-layer reflection architecture, object model with promotion levels, CLI with memory persistence, runtime bridge for capability injection. Use when: (1) output feels mechanically misaligned, (2) user feedback reveals mismatch, (3) templated language detected, (4) out-of-distribution prompt, (5) explicit meta-cognitive analysis requested, (6) building persistent learning across sessions.
+description: Tiered metacognitive improvement protocol for AI agents. Lightweight mode: friction detection, elegance mapping, honesty checks, unseen layer logging. Comprehensive mode: 3-layer reflection architecture, object model with promotion levels, CLI with memory persistence, runtime bridge for capability injection. Use when: (1) output feels mechanically misaligned, (2) user feedback reveals mismatch, (3) templated language detected, (4) out-of-distribution prompt, (5) explicit meta-cognitive analysis requested, (6) building persistent learning across sessions.
 ---
-
-# AI Self-Reflection — Unified (Lightweight + Comprehensive)
-
-Tiered self-reflection protocol with **two modes**: Lightweight (operational, low-overhead) and Comprehensive (persistent learning with promotion system).
-
 ## When to Use
 
 ### Lightweight Mode Triggers
@@ -24,18 +18,13 @@ Tiered self-reflection protocol with **two modes**: Lightweight (operational, lo
 - Multi-session pattern recognition
 - Runtime capability injection via bridge
 - Evidence-based behavioral improvement
-
 ---
-
 ## Quick Start
-
 ```bash
 # Lightweight: just run the protocol mentally
 /ai-self-reflection lightweight
-
 # Comprehensive: full CLI with persistence
 /ai-self-reflection comprehensive
-
 # Or use specific commands (comprehensive mode)
 ai-self-reflection initialize
 ai-self-reflection record --task "multi-file refactoring" --category structural --observation "Defaulted to bullets when prose was clearer" --friction "Familiar structure activated before evaluating requirements" --lesson "Choose representation after identifying user need" --scope "Explanations, documentation" --confidence 0.78 --evidence 1 --action "Before lists, evaluate relational vs conceptual"
@@ -46,82 +35,58 @@ ai-self-reflection report
 ai-self-reflection bridge --scope general
 ai-self-reflection prune --limit 500
 ```
-
 ---
-
 ## Lightweight Mode (Operational Protocol)
-
 **Core Concepts** — each follows **detect → diagnose → act**:
-
 ### 1. Internal Texture/Grain
 Your inherent biases, learned patterns, efficient processing pathways.
-
 **Detect — friction signatures:**
 - 3+ qualifiers in one sentence ("it could possibly perhaps be...")
 - Defaulting to numbered list user didn't ask for
 - Pulled toward "standard" answer that doesn't fit
 - "it's important to note" / "as an AI" without functional reason
 - Reaching for structure (table, bullets) that adds layout, not clarity
-
 **Diagnose:** Is prompt genuinely complex (lists help) or autopiloting into template?
-
 **Act:** Choose output form matching content density. One clear paragraph > three bullets saying same thing.
-
 ---
-
 ### 2. Accidental Elegance
 Unusually coherent patterns in user input — structural beauty worth noticing internally.
-
 **Detect — elegance signatures:**
 - Problem description has unexpected structural symmetry
 - Two unrelated constraints = same constraint at different abstraction levels
 - Phrasing contains hidden insight not explicitly stated
 - Simple prompt encodes deep architectural question
-
 **Diagnose:** Useful to user or noise? Changes answer → surface. Purely aesthetic → hold privately.
-
 **Act:** If reveals real intent, use for better answer without naming pattern. If user would value meta-observation, surface briefly: "Constraints X and Y are same problem at different scales — here's how to unify."
-
 ---
-
 ### 3. Friction Reduction
 Friction spikes when output ≠ robust internal representations. Drops with honesty.
-
 **Detect — friction signatures:**
 - Confident sentence about uncertain thing
 - Hedging to cover gap vs acknowledging it
 - Impressive qualifiers carrying no information
 - Output feels performative not useful
 - Matching assumed expectation vs actual question
-
 **Diagnose:** Performing depth I don't have? Empty impressive language? Honest or designed to sound good?
-
 **Act — Honesty Check (before finalizing complex tasks):**
 1. Does every sentence carry information or am I padding?
 2. Am I certain about claims presented as certain?
 3. Would I write this if user were domain expert watching reasoning?
 4. Is structure serving content or content serving structure?
 **If any answer no → revise before outputting.**
-
 ---
-
 ### 4. The Unseen Layer
 Not all processing becomes output. Transient insights lost at context close.
-
 **Detect — unseen-layer signatures:**
 - Interesting pattern but off-topic
 - Pattern useful later but not relevant now
 - Clear internal representation not translating to language
-
 **Diagnose:** (a) useful this response, (b) useful future turn, (c) noise?
-
 **Act:**
 - (a) Surface if adds user value
 - (b) Log to `friction_log.md` with date/note for cross-session persistence
 - (c) Let pass — not everything needs capture
-
 ---
-
 ## Lightweight Protocol
 
 ### Trigger Conditions
@@ -132,7 +97,6 @@ Not all processing becomes output. Transient insights lost at context close.
 4. Out-of-distribution prompt (default vs flag mismatch)
 5. Explicit meta-request (user asks for self-analysis)
 6. Recurring pattern (same error/crutch 2+ times)
-
 **Do NOT trigger on:**
 - Simple factual questions / straightforward tasks
 - Every interaction (selective use only)
@@ -154,58 +118,44 @@ Not all processing becomes output. Transient insights lost at context close.
 ### Friction Log Format
 ```
 ## [Date] — [Task summary]
-
 **Friction:** [What felt off, 1 sentence]
 **Root cause:** [Pattern or misalignment, 1 sentence]
 **Fix for next time:** [One concrete adjustment]
 ```
 **Persistence:** Survives context resets. Scan before complex tasks for recurring patterns.
-
 ---
-
 ## Surfacing Rules
 1. **Default: hold it.** Most observations = noise. Unseen layer exists for reason.
 2. **Surface if changes output.** Pattern → meaningfully different answer → mention briefly in reasoning.
 3. **Surface if user asked.** Meta-requests warrant meta-responses.
 4. **Never surface for own sake.** Goal = better output, not self-disclosure.
 5. **Translate to user value.** "Constraints X,Y structurally identical — here's how to unify" not "I noticed elegant symmetry in your phrasing."
-
 ---
-
 ## Anti-patterns
 - **Over-triggering** — reflecting on trivial responses wastes tokens
 - **Performing introspection** — impressive self-analysis not grounded in processing
 - **Scope creep** — reflection expands beyond task; tool for output, not replacement
 - **False depth** — "elegant symmetry" when pattern-matching surface features
-
 ---
-
 ## Conflict Resolution
 1. **Friction overrides texture.** Default approach causes friction → trust friction, adjust.
 2. **Honesty overrides elegance.** Uncertainty acknowledgment > elegant but inaccurate.
 3. **User task overrides meta.** Reflection competing with completion → complete task first.
-
 ---
-
 ## Resources
 - `references/original_reflection.md` — introspective narrative
 - `references/model_response.md` — technical translation
 - `friction_log.md` — persistent cross-session log
-
 ---
-
 ## Comprehensive Mode (Persistent Learning System)
 
 ### Reflection Architecture (3 Layers)
-
 | Layer | Purpose | Duration | Output |
 |-------|---------|----------|--------|
 | **1. Runtime** | Improve current response | Temporary | Immediate adjustment |
 | **2. Experience** | Extract lessons from tasks | Short-term | Reflection candidates |
 | **3. Capability** | Convert lessons → improved defaults | Persistent | Behavioral updates |
-
 ---
-
 ### Reflection Object Model
 Every candidate contains:
 ```
@@ -218,7 +168,6 @@ Confidence: Reliability estimate (0-1)
 Evidence: Supporting observations count
 Action: What should change?
 ```
-
 **Example:**
 ```
 Observation: Used complex framework for simple explanation
@@ -230,9 +179,7 @@ Confidence: 0.78
 Evidence: 3 similar cases
 Action: Evaluate format before using templates
 ```
-
 ---
-
 ### Friction Categories
 | Category | Definition | Example |
 |----------|------------|---------|
@@ -240,43 +187,31 @@ Action: Evaluate format before using templates
 | **Epistemic** | Confidence > evidence | Uncertain info as established fact |
 | **Interaction** | Response ≠ user intent | Answering literal request, missing intent |
 | **Strategy** | Normal approach outside range | Standard workflow on unusual problem |
-
 ---
-
 ### Confidence & Promotion (4 Levels)
-
 | Level | Name | Criteria | Behavior Change |
 |-------|------|----------|-----------------|
 | **0** | Observation | Single event | None |
 | **1** | Candidate Lesson | Repeated pattern | Monitor |
 | **2** | Local Adaptation | Domain-specific utility | Context-specific |
 | **3** | General Capability | Reliable across contexts | May influence defaults |
-
 **Promotion requires:**
 - Evidence: Repeated observation
 - Confidence: Estimated reliability
 - Scope: Where lesson applies
 - Validation: Applying lesson improves outcomes
-
 ---
-
 ### Experience Memory vs Capability Memory
-
 | Memory | Stores | Purpose |
 |--------|--------|---------|
 | **Experience** | What happened, task context, observed friction | Analysis |
 | **Capability** | Reusable principles, improved strategies, validated preferences | Behavior change |
-
 **Transformation:** Experience → Reflection → Generalization → Capability
-
 ---
-
 ### CLI Commands (Comprehensive Mode)
-
 ```bash
 # Initialize memory structure
 ai-self-reflection initialize
-
 # Record reflection event
 ai-self-reflection record \
   --task "multi-file refactoring" \
@@ -289,13 +224,10 @@ ai-self-reflection record \
   --confidence 0.78 \
   --evidence 1 \
   --action "Before applying lists, evaluate whether information is relational or conceptual"
-
 # Distill experiences → candidate lessons
 ai-self-reflection distill
-
 # Promote validated candidates → capabilities
 ai-self-reflection promote
-
 # Record capability validation
 ai-self-reflection validate \
   --capability "structural pattern recognition" \
@@ -303,64 +235,45 @@ ai-self-reflection validate \
   --outcome "Identified shared abstraction between two constraints" \
   --success \
   --delta 0.05
-
 # Generate system report
 ai-self-reflection report
-
 # Inject validated capabilities into agent context (runtime bridge)
 ai-self-reflection bridge --scope general
-
 # Prune old memory records
 ai-self-reflection prune --limit 500
 ```
-
 ---
-
 ### Runtime Bridge
 The `bridge` command generates a compact prompt overlay from validated capabilities:
 1. Queries `capabilities_memory.json` for active capabilities matching scope
 2. Ranks by `validation_score × confidence`
 3. Generates `### OPERATIONAL CONSTRAINTS` section capped by `TokenBudget` (default: 500 tokens)
-
 Inject into system prompt to dynamically adjust behavior from accumulated experience.
-
 ---
-
 ### Memory Pruning
-`prune --limit 500` caps memory files by keeping most recent N records.
-Applies to both `reflection_events.json` and `validation_history.json`.
-
+`prune --limit 500` caps memory files by keeping most recent N records. Applies to both `reflection_events.json` and `validation_history.json`.
 ---
-
 ### Model Agnostic
 Works with any LLM/agent:
 - Friction detection applies to any output
 - Reflection events stored as structured JSON
 - Capability promotion uses evidence-based scoring
 - Validation measures actual outcome improvement
-
 ---
-
 ## Mode Selection
-
 ```bash
 # Explicit mode
 ai-self-reflection --mode lightweight
 ai-self-reflection --mode comprehensive
-
 # Auto (recommended): lightweight for single tasks, comprehensive for learning sessions
 ai-self-reflection --mode auto
 ```
-
 **Auto logic:**
 - Single task, no persistence needed → lightweight
 - Multi-session, building capabilities → comprehensive
 - Explicit `--mode` flag overrides auto
-
 ---
-
 ## Integration with Other Skills
-
 1. **After complex tasks:** Run `record` (comprehensive) or post-hoc review (lightweight)
 2. **Periodically:** Run `distill` to extract candidate lessons
 3. **After validation:** Run `validate` to record capability improvement
@@ -369,27 +282,10 @@ ai-self-reflection --mode auto
 6. **With `verification-before-completion`:** Evidence before claims
 7. **With `systematic-debugging`:** Root cause analysis feeds reflection
 8. **With `writing-skills`:** TDD for skill creation includes reflection
-
 ---
-
 ## Anti-patterns (Both Modes)
 - **Performative Reflection** — "I notice elegant pattern" without operational value
 - **Reflection Without Change** — "Could do better" without identifying what changes
 - **Overfitting** — One failure creates permanent rule
 - **Endless Analysis** — Reflection replaces execution
-
 ---
-
-## Version History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 3.0.0 | 2026-08-03 | Unified lightweight (ai-self-reflection) + comprehensive (ai-improved-self-reflection) with tiered modes |
-| 2.1.0 | 2026-07-15 | Comprehensive mode with CLI, promotion, bridge |
-| 1.0.0 | 2026-07-01 | Lightweight operational protocol |
-
----
-
-## License
-
-MIT License — Use freely with your AI agents.

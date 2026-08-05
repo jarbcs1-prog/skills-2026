@@ -1,43 +1,43 @@
 # Skills 2026
 
-A collection of 42 AI agent skills for LLM routing, context management, self-reflection, collaborative skill engineering, and more.
+A collection of 42 AI agent skills for LLM routing, context management, self-reflection, collaborative skill engineering and more.
 
 ## Authorship & Attribution
 
-I created the following skills from scratch or rebuilt them substantially: **ai-self-reflection**, **collaborative-skill-engineering**, **chinese-translator**, **dynamic-context-pruning** (this version), and **opencode-zen-delegator**.
+I created the following skills from scratch or rebuilt them substantially: **ai-self-reflection**, **collaborative-skill-engineering**, **chinese-translator**, **dynamic-context-pruning** (this version) and **opencode-zen-delegator**.
 
-All other skills in this repository are pre-existing work by their respective creators and contributors, refactored here to improve efficiency, performance, and model-agnostic compatibility. I am deeply grateful to the original authors and all contributors who built and maintained these skills. This repository is a collaborative effort, and credit belongs entirely to those who originated and shaped each skill.
+All other skills in this repository are pre-existing work by their respective creators and contributors, refactored here to improve efficiency, performance and model-agnostic compatibility. I am deeply grateful to the original authors and all contributors who built and maintained these skills. This repository is a collaborative effort and credit belongs entirely to those who originated and shaped each skill.
 
 ## Skills Overview
 
 | Skill | Description | Status |
 |-------|-------------|--------|
 | [ai-self-reflection](#ai-self-reflection) | Metacognitive improvement protocol — friction detection, reflection, distillation and validated capability promotion | Production-Ready |
-| [brainstorming](#brainstorming) | Idea exploration with design-doc validation, spec diffing, and decision matrices | Production-Ready |
-| [code-quality](#code-quality) | Pre-commit quality gates with config, incremental mode, and IDE integration | Production-Ready |
-| [code-reviewer](#code-reviewer) | Rule engine with 38 regex rules, SARIF output, CI gate, and review history | Production-Ready |
+| [brainstorming](#brainstorming) | Idea exploration with design-doc validation, spec diffing and decision matrices | Production-Ready |
+| [code-quality](#code-quality) | Pre-commit quality gates with config, incremental mode and IDE integration | Production-Ready |
+| [code-reviewer](#code-reviewer) | Rule engine with 38 regex rules, SARIF output, CI gate and review history | Production-Ready |
 | [collaborative-skill-engineering](#collaborative-skill-engineering) | Interactive workflow for creating and validating new skills | Production-Ready |
-| [daydream](#daydream) | Insight mining from a note vault with quality scoring, dedup, and knowledge graphs | Production-Ready |
+| [daydream](#daydream) | Insight mining from a note vault with quality scoring, dedup and knowledge graphs | Production-Ready |
 | [dynamic-context-pruning](#dynamic-context-pruning) | Context window management with restorable compression and staged reduction | Production-Ready |
 | [having-difficult-conversations](#having-difficult-conversations) | Preparation and practice for difficult workplace conversations | Production-Ready |
 | [opencode-zen-delegator](#opencode-zen-delegator) | Unified delegation router for OpenCode Zen and external LLM providers | Production-Ready |
-| [performance-optimizer](#performance-optimizer) | Profiler detection, rule scanning, and benchmark harness with baselines | Production-Ready |
-| [project-planner](#project-planner) | Structured project planning with templates, critical path, and tracking | Production-Ready |
+| [performance-optimizer](#performance-optimizer) | Profiler detection, rule scanning and benchmark harness with baselines | Production-Ready |
+| [project-planner](#project-planner) | Structured project planning with templates, critical path and tracking | Production-Ready |
 | [prompt-engineering](#prompt-engineering) | Unified prompt engineering — workflows, EARS methodology, evaluation, model guidance | Production-Ready |
 | [remembering-conversations](#remembering-conversations) | Local conversation index with hybrid search and pattern detection | Production-Ready |
-| [skill-creator](#skill-creator) | Create, modify, and evaluate skills with template scaffolding and CI/CD | Production-Ready |
+| [skill-creator](#skill-creator) | Create, modify and evaluate skills with template scaffolding and CI/CD | Production-Ready |
 | [skill-judge](#skill-judge) | Score skills against official specifications with calibrated rubric | Production-Ready |
-| [skill-reviewer](#skill-reviewer) | Batch skill review with security scan, health tracking, and consistency reports | Production-Ready |
-| [skills-search](#skills-search) | Unified skill discovery, installation, and management | Production-Ready |
-| [strategy-advisor](#strategy-advisor) | Strategy frameworks, decision matrices, scenarios, and templates | Production-Ready |
+| [skill-reviewer](#skill-reviewer) | Batch skill review with security scan, health tracking and consistency reports | Production-Ready |
+| [skills-search](#skills-search) | Unified skill discovery, installation and management | Production-Ready |
+| [strategy-advisor](#strategy-advisor) | Strategy frameworks, decision matrices, scenarios and templates | Production-Ready |
 | [subagent-driven-development](#subagent-driven-development) | Parallel subagent orchestration with task briefs and review packages | Production-Ready |
 | [systematic-debugging](#systematic-debugging) | 4-phase root cause debugging with worksheets and pattern library | Production-Ready |
-| [telecommunications-expert](#telecommunications-expert) | Telecom network management, billing, 5G, and infrastructure — modular library + CLI | Production-Ready |
+| [telecommunications-expert](#telecommunications-expert) | Telecom network management, billing, 5G and infrastructure — modular library + CLI | Production-Ready |
 | [test-driven-development](#test-driven-development) | RED-GREEN-REFACTOR TDD enforcement with CLI and language support | Production-Ready |
-| [trust-psychology](#trust-psychology) | Trust signal analysis, audit, A/B testing, and component library | Production-Ready |
+| [trust-psychology](#trust-psychology) | Trust signal analysis, audit, A/B testing and component library | Production-Ready |
 | [verification-before-completion](#verification-before-completion) | Evidence-based verification before claiming completion | Production-Ready |
 | [writing-plans](#writing-plans) | Bite-sized implementation plans with validation | Production-Ready |
-| [writing-skills](#writing-skills) | Skill authoring with init script, test harness, and registry | Production-Ready |
+| [writing-skills](#writing-skills) | Skill authoring with init script, test harness and registry | Production-Ready |
 
 ---
 
@@ -131,7 +131,7 @@ dynamic-context-pruning/
 ├── examples/
 │   ├── basic_agent_loop.py
 │   ├── full_agent_loop.py
-│   └── config_examples/                 # minimal.json, full.json, production.json
+│   └── config_examples/                  # minimal.json, full.json, production.json
 ├── templates/config_template.json
 ├── .env.example
 └── README.md
@@ -140,7 +140,7 @@ dynamic-context-pruning/
 **Quick start:**
 ```bash
 pip install tiktoken
-python scripts/benchmark_context_reduction.py    # See reduction ratios
+python scripts/benchmark_context_reduction.py     # See reduction ratios
 python -m pytest scripts/test_*.py -v             # Run 30 tests
 ```
 
@@ -148,7 +148,7 @@ python -m pytest scripts/test_*.py -v             # Run 30 tests
 
 ## opencode-zen-delegator
 
-Unified delegation router for OpenCode Zen and external LLM providers with automatic fallback, cost optimization and intelligent routing. Merged from `big-pickle-router`, `delegator`, `external-llm-router`, and `rate-limit-router`.
+Unified delegation router for OpenCode Zen and external LLM providers with automatic fallback, cost optimization and intelligent routing. Merged from `big-pickle-router`, `delegator`, `external-llm-router` and `rate-limit-router`.
 
 **When to use:**
 - Rate limit hit (429 from Zen, OpenRouter, OpenAI or Anthropic)
