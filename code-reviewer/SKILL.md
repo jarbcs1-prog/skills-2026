@@ -1,8 +1,11 @@
 ---
 name: code-reviewer
-description: Expert code reviewer who ensures quality, security and maintainability across any programming language. Provides actionable feedback to improve code. Features automated rule engine with 50+ rules across 5 categories, language-specific rule packs, incremental review, CI/CD integration with SARIF output, and review history tracking.
+description: |
+  Expert code reviewer who ensures quality, security and maintainability across any programming language.
+  Provides actionable feedback to improve code.
 
   Use when:
+
   - User asks to review code, PR or commits
   - Developer completed a feature and wants review
   - Pre-merge review needed
