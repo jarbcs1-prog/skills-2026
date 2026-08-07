@@ -5,6 +5,8 @@ description: |
 version: "2.0.0"
 ---
 
+> **Disclaimer:** This plugin is not built by the OpenCode team and is not affiliated with OpenCode in any way. It is an independent community project.
+
 # OpenCode Zen Delegator — Unified Router
 
 Unified delegation system for OpenCode Zen (`opencode/big-pickle`) and external LLM providers with automatic fallback, cost optimization and intelligent routing.
