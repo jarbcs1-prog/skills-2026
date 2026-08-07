@@ -1,6 +1,6 @@
 ---
 name: skill-judge
-description: "Use to evaluate skills design quality against official specifications and best practices. TRIGGERS when: User mentions "review", "audit", "improve", "specifications", "evaluate", "score", "assess". Use when reviewing, auditing, improving or changing specifications of SKILL.md files and skill packages. Provides multi-dimensional scoring and actionable improvement suggestions."
+description: Use to evaluate skills design quality against official specifications and best practices. TRIGGERS when: User mentions "review", "audit", "improve", "specifications", "evaluate", "score", "assess". Use when reviewing, auditing, improving or changing specifications of SKILL.md files and skill packages. Provides multi-dimensional scoring and actionable improvement suggestions.
 ---
 
 # Skill Judge
