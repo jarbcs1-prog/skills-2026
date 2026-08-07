@@ -1,6 +1,9 @@
 ---
 name: trust-psychology
-description: Build trust signals that reduce perceived risk and enable user action. Triggers: trust, conversion, landing page, checkout, onboarding, cart abandonment, credibility, social proof, CTA, sign-up, sign up.
+description: >
+  Build trust signals that reduce perceived risk and enable user action.
+  Triggers: trust, conversion, landing page, checkout, onboarding,
+  cart abandonment, credibility, social proof, CTA, sign-up, sign up.
 ---
 
 # Trust Psychology — Reducing Risk to Enable Action
