@@ -1,6 +1,12 @@
 ---
 name: writing-plans
-description: Write comprehensive implementation plans assuming the implementer has zero context for the codebase and questionable taste. Use when: implementing multi-step features, breaking down complex requirements, delegating to subagents via subagent-driven-development. 
+description: >
+  Write comprehensive implementation plans assuming the implementer
+  has zero context for the codebase and questionable taste.
+
+  Use when: implementing multi-step features, breaking down complex
+  requirements, delegating to subagents via
+  subagent-driven-development.
 ---
 
 # Writing Implementation Plans
