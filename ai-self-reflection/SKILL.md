@@ -1,6 +1,18 @@
 ---
 name: ai-self-reflection
-description: Tiered metacognitive improvement protocol for AI agents. Lightweight mode: friction detection, elegance mapping, honesty checks, unseen layer logging. Comprehensive mode: 3-layer reflection architecture, object model with promotion levels, CLI with memory persistence, runtime bridge for capability injection. Use when: (1) output feels mechanically misaligned, (2) user feedback reveals mismatch, (3) templated language detected, (4) out-of-distribution prompt, (5) explicit meta-cognitive analysis requested, (6) building persistent learning across sessions.
+description: >
+  Tiered metacognitive improvement protocol for AI agents.
+  Lightweight mode: friction detection, elegance mapping,
+  honesty checks, unseen layer logging.
+  Comprehensive mode: 3-layer reflection architecture,
+  object model with promotion levels, CLI with memory persistence,
+  runtime bridge for capability injection.
+  Use when: (1) output feels mechanically misaligned,
+  (2) user feedback reveals mismatch,
+  (3) templated language detected,
+  (4) out-of-distribution prompt,
+  (5) explicit meta-cognitive analysis requested,
+  (6) building persistent learning across sessions.
 ---
 ## When to Use
 
