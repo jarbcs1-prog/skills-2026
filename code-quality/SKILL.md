@@ -1,6 +1,19 @@
 ---
 name: code-quality
-description: Run comprehensive code quality checks across multiple languages (TypeScript, Python, Rust, Go) including type checking, linting, formatting, markdown validation, and dependency scanning. Supports incremental mode (only changed files), configuration via .code-quality.yml, and auto-fix capabilities. Use when: (1) Before committing code changes, (2) In CI/CD pipelines for automated quality gates, (3) After making significant code changes, (4) When preparing code for review, (5) When ensuring code meets quality standards, (6) For type checking, linting, formatting and markdown validation, (7) In pre-commit hooks or (8) For automated quality gates before merging. Triggers: finalize, code quality, typecheck, lint, format, check code, quality check, run checks, pre-commit, before commit, CI checks, validate code.
+description: >
+  Run comprehensive code quality checks across multiple languages
+  (TypeScript, Python, Rust, Go), including type checking, linting,
+  formatting, markdown validation, and dependency scanning.
+  Supports incremental mode (only changed files), configuration via
+  .code-quality.yml, and auto-fix capabilities.
+
+  Use when: before committing code changes, in CI/CD pipelines,
+  after significant code changes, when preparing code for review,
+  or when validating code quality.
+
+  Triggers: finalize, code quality, typecheck, lint, format,
+  check code, quality check, run checks, pre-commit,
+  before commit, CI checks, validate code.
 ---
 
 # Code Quality
